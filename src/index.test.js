@@ -49,7 +49,7 @@ describe("throwError", () => {
   });
 });
 
-describe.only("about returnError", () => {
+describe("about returnError", () => {
   describe("returnError", () => {
     test("apply true to parameter", () => {
       classAsync

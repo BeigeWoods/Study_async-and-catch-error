@@ -49,6 +49,100 @@ describe("throwError", () => {
   });
 });
 
+describe.only("about returnError", () => {
+  describe("returnError", () => {
+    test("apply true to parameter", () => {
+      classAsync
+        .returnError(true)
+        .then((value) => expect(value).toBe("True from reject"))
+        .catch((error) => expect(error).toBeUndefined());
+    });
+
+    test("apply true to parameter and put the value into a variable", async () => {
+      const value = await classAsync.returnError(true, (error) =>
+        expect(error).toBeUndefined()
+      );
+      expect(value).toBe("True from reject");
+    });
+
+    test("apply false to parameter", () => {
+      classAsync
+        .returnError(false)
+        .then((value) => expect(value.message).toBe("Reject Error"))
+        .catch((error) => expect(error).toBeUndefined());
+    });
+  });
+
+  describe("then_returnError", () => {
+    test("apply true to parameter", () => {
+      classAsync
+        .then_returnError(true)
+        .then((value) => expect(value).toBe("return : True from reject"))
+        .catch((error) => expect(error).toBeUndefined());
+    });
+
+    test("apply true to parameter and put the value into a variable", async () => {
+      const value = await classAsync
+        .then_returnError(true)
+        .catch((error) => expect(error).toBeUndefined());
+      expect(value).toBe("return : True from reject");
+    });
+
+    test("apply false to parameter", () => {
+      classAsync
+        .then_returnError(false)
+        .then((value) => expect(value.message).toBe("Reject Error"))
+        .catch((error) => expect(error).toBeUndefined());
+    });
+  });
+
+  describe("noReturn_returnError", () => {
+    test("apply true to parameter", () => {
+      classAsync
+        .noReturn_returnError(true)
+        .then((value) => expect(value).toBeUndefined())
+        .catch((error) => expect(error).toBeUndefined());
+    });
+
+    test("apply true to parameter and put the value into a variable", async () => {
+      const value = await classAsync
+        .noReturn_returnError(true)
+        .catch((error) => expect(error).toBeUndefined());
+      expect(value).toBeUndefined();
+    });
+
+    test("apply false to parameter", () => {
+      classAsync
+        .noReturn_returnError(false)
+        .then((value) => expect(value).toBeUndefined())
+        .catch((error) => expect(error).toBeUndefined());
+    });
+  });
+
+  describe("noReturn_then_returnError", () => {
+    test("apply true to parameter", () => {
+      classAsync
+        .noReturn_then_returnError(true)
+        .then((value) => expect(value).toBeUndefined())
+        .catch((error) => expect(error).toBeUndefined());
+    });
+
+    test("apply true to parameter and put the value into a variable", async () => {
+      const value = await classAsync
+        .noReturn_then_returnError(true)
+        .catch((error) => expect(error).toBeUndefined());
+      expect(value).toBeUndefined();
+    });
+
+    test("apply false to parameter", () => {
+      classAsync
+        .noReturn_then_returnError(false)
+        .then((value) => expect(value).toBeUndefined())
+        .catch((error) => expect(error).toBeUndefined());
+    });
+  });
+});
+
 describe("about callbackError", () => {
   describe("callbackError", () => {
     test("apply true to parameter", () => {

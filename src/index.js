@@ -1,26 +1,49 @@
 class Async {
   constructor() {}
 
-  async resolveError(isTrue) {
+  // plain
+  resolveError(isTrue) {
     return isTrue
-      ? await Promise.resolve("True from resolve")
-      : await Promise.resolve(new Error("Resolve Error"));
+      ? Promise.resolve("True from resolve")
+      : Promise.resolve(new Error("Resolve Error"));
   }
 
-  async rejectError(isTrue) {
+  rejectError(isTrue) {
     return isTrue
-      ? await Promise.resolve("True from reject")
-      : await Promise.reject(new Error("Reject Error"));
+      ? Promise.resolve("True from reject")
+      : Promise.reject(new Error("Reject Error"));
   }
 
   async throwError(isTrue) {
     if (isTrue) {
-      return await Promise.resolve("True from throw");
+      return Promise.resolve("True from throw");
     } else {
       throw new Error("Throw Error");
     }
   }
 
+  // about returnError
+  async returnError(bool) {
+    return await this.rejectError(bool).catch((error) => error);
+  }
+
+  async then_returnError(bool) {
+    return await this.rejectError(bool)
+      .then((value) => `return : ${value}`)
+      .catch((error) => error);
+  }
+
+  async noReturn_returnError(bool) {
+    await this.rejectError(bool).catch((error) => error);
+  }
+
+  async noReturn_then_returnError(bool) {
+    await this.rejectError(bool)
+      .then((value) => `return : ${value}`)
+      .catch((error) => error);
+  }
+
+  // about callbackError
   async callbackError(bool, callback) {
     return await this.rejectError(bool).catch((error) => callback(error));
   }
@@ -41,6 +64,7 @@ class Async {
       .catch((error) => callback(error));
   }
 
+  // about throwExtraError
   async throwExtraError(bool) {
     return await this.rejectError(bool).catch((error) => {
       throw new Error(`Extra Error : ${error.message}`);

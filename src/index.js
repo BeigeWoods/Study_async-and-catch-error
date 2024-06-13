@@ -92,6 +92,12 @@ class Async {
         throw new Error(`Extra Error : ${error.message}`);
       });
   }
+
+  async throwExpression(bool) {
+    return await this.rejectError(bool).catch((error) => {
+      throw `Expression Error : ${error.message}`;
+    });
+  }
 }
 
 module.exports = Async;

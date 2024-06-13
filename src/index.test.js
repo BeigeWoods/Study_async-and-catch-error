@@ -328,3 +328,11 @@ describe("about throwExtraError", () => {
     });
   });
 });
+
+describe("about throwExpression", () => {
+  test("apply false to parameter", () => {
+    classAsync
+      .throwExpression(false)
+      .catch((error) => expect(error).toBe("Expression Error : Reject Error"));
+  });
+});

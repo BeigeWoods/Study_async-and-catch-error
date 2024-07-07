@@ -98,6 +98,12 @@ class Async {
       throw `Expression Error : ${error.message}`;
     });
   }
+
+  // about variable
+  async insertIntoVarWithNocatch(bool) {
+    const result = await this.throwError(bool);
+    if (result) return true;
+  }
 }
 
 module.exports = Async;

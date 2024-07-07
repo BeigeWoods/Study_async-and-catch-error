@@ -336,3 +336,17 @@ describe("about throwExpression", () => {
       .catch((error) => expect(error).toBe("Expression Error : Reject Error"));
   });
 });
+
+describe("about insertIntoVarWithNocatch", () => {
+  test("apply true to parameter", () => {
+    classAsync
+      .insertIntoVarWithNocatch(true)
+      .then((value) => expect(value).toBe(true));
+  });
+
+  test("apply false to parameter", () => {
+    classAsync
+      .insertIntoVarWithNocatch(false)
+      .catch((error) => expect(error.message).toBe("Throw Error"));
+  });
+});

@@ -117,4 +117,78 @@ describe("basic", () => {
         expect(error).toBe("Catch error it's own : Try Reject Error");
       }));
   });
+
+  describe("Promise.all", () => {
+    describe("about rejectError", () => {
+      test.skip("will occur jest error > thrown: 'Reject Error'", async () =>
+        Promise.all([
+          await basic.rejectError(true),
+          await basic.rejectError(false),
+        ]).catch((error) => expect(error).toBe("Reject Error")));
+
+      test("Promise.all doesn't catch error", async () =>
+        Promise.all([
+          await basic.rejectError(true),
+          await basic
+            .rejectError(false)
+            .catch((error) => expect(error).toBe("Reject Error")),
+        ]).catch((error) => expect(error).toBeUndefined()));
+
+      test.skip("will occur jest error > thrown: 'Wish to catch it : Reject Error'", async () =>
+        Promise.all([
+          await basic.rejectError(true),
+          await basic.rejectError(false).catch((error) => {
+            throw `Wish to catch it : ${error}`;
+          }),
+        ]).catch((error) =>
+          expect(error).toBe("Wish to catch it : Reject Error")
+        ));
+
+      test("Promise.all catch error when return error", async () =>
+        Promise.all([
+          await basic.rejectError(true),
+          await basic
+            .rejectError(false)
+            .catch((error) => `Wish to catch it : ${error}`),
+        ]).catch((error) =>
+          expect(error).toBe("Wish to catch it : Reject Error")
+        ));
+    });
+  });
+
+  describe("about throwError", () => {
+    test.skip("will occur jest error > thrown: 'Throw Error'", async () =>
+      Promise.all([
+        await basic.throwError(true),
+        await basic.throwError(false),
+      ]).catch((error) => expect(error).toBe("Throw Error")));
+
+    test("Promise.all doesn't catch error", async () =>
+      Promise.all([
+        await basic.throwError(true),
+        await basic
+          .throwError(false)
+          .catch((error) => expect(error).toBe("Throw Error")),
+      ]).catch((error) => expect(error).toBeUndefined()));
+
+    test.skip("will occur jest error > thrown: 'Wish to catch it : Throw Error'", async () =>
+      Promise.all([
+        await basic.throwError(true),
+        await basic.throwError(false).catch((error) => {
+          throw `Wish to catch it : ${error}`;
+        }),
+      ]).catch((error) =>
+        expect(error).toBe("Wish to catch it : Throw Error")
+      ));
+
+    test("Promise.all catch error when return error", async () =>
+      Promise.all([
+        await basic.throwError(true),
+        await basic
+          .throwError(false)
+          .catch((error) => `Wish to catch it : ${error}`),
+      ]).catch((error) =>
+        expect(error).toBe("Wish to catch it : Throw Error")
+      ));
+  });
 });

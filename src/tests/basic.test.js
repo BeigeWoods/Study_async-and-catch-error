@@ -144,7 +144,12 @@ describe("basic", () => {
           expect(error).toBe("Wish to catch it : Reject Error")
         ));
 
-      test("Promise.all catch error when return error", async () =>
+      test("Promise.all will catch error when functions don't be with await", async () =>
+        Promise.all([basic.rejectError(true), basic.rejectError(false)]).catch(
+          (error) => expect(error).toBe("Reject Error")
+        ));
+
+      test("Promise.all will catch error when functions return error even if be with await", async () =>
         Promise.all([
           await basic.rejectError(true),
           await basic
@@ -181,7 +186,12 @@ describe("basic", () => {
         expect(error).toBe("Wish to catch it : Throw Error")
       ));
 
-    test("Promise.all catch error when return error", async () =>
+    test("Promise.all will catch error when functions don't be with await", async () =>
+      Promise.all([basic.throwError(true), basic.throwError(false)]).catch(
+        (error) => expect(error).toBe("Throw Error")
+      ));
+
+    test("Promise.all will catch error when functions return error even if be with await", async () =>
       Promise.all([
         await basic.throwError(true),
         await basic
